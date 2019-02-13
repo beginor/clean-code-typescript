@@ -33,6 +33,7 @@ Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-cod
   9. [错误处理](#错误处理)
   10. [格式化](#格式化)
   11. [评论](#评论)
+  12. [翻译](#翻译)
 
 ## Introduction
 
@@ -84,13 +85,17 @@ improvement. Beat up the code instead!
 
 **[⬆ 返回目录](#目录)**
 
-## Variables 
+## Variables 变量
 
 ### Use meaningful variable names
 
+### 使用有意义的变量名称
+
 Distinguish names in such a way that the reader knows what the differences offer.
 
-**Bad:**
+使用可以区分的名称， 让读者知道他们的区别是什么。
+
+**不好的：**
 
 ```ts
 function between<T>(a1: T, a2: T, a3: T): boolean {
@@ -99,7 +104,7 @@ function between<T>(a1: T, a2: T, a3: T): boolean {
 
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function between<T>(value: T, left: T, right: T): boolean {
@@ -107,13 +112,17 @@ function between<T>(value: T, left: T, right: T): boolean {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use pronounceable variable names
 
+### 使用可拼读的变量名称
+
 If you can’t pronounce it, you can’t discuss it without sounding like an idiot.
 
-**Bad:**
+如果你不能把它读出来， 那你就不能和同事讨论它， 这看起来像块纱布。
+
+**不好的：**
 
 ```ts
 type DtaRcrd102 = {
@@ -123,7 +132,7 @@ type DtaRcrd102 = {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 type Customer = {
@@ -133,11 +142,13 @@ type Customer = {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use the same vocabulary for the same type of variable
 
-**Bad:**
+### 为相同类型的变量使用相同的词汇
+
+**不好的：**
 
 ```ts
 function getUserInfo(): User;
@@ -145,39 +156,48 @@ function getUserDetails(): User;
 function getUserData(): User;
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function getUser(): User;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
-### Use searchable names
+### 使用可搜索的名称
 
 We will read more code than we will ever write. It's important that the code we do write is readable and searchable. By *not* naming variables that end up being meaningful for understanding our program, we hurt our readers. Make your names searchable. Tools like [TSLint](https://palantir.github.io/tslint/rules/no-magic-numbers/) can help identify unnamed constants.
 
-**Bad:**
+
+我们要阅读的代码比要写的代码多得多， 所以我们写出的代码的可读性和可搜索性是很重要的。 使用没有
+意义的变量名将会导致我们的程序难于理解， 将会伤害我们的读者， 所以请使用可搜索的变量名。 类似 [TSLint](https://palantir.github.io/tslint/rules/no-magic-numbers/)
+的工具可以帮助我们找到未命名的常量。
+
+**不好的：**
 
 ```ts
 // What the heck is 86400000 for?
+// 艹， 86400000 是什么鬼？
 setTimeout(restart, 86400000);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 // Declare them as capitalized named constants.
+// 将他们声明为大写的变量
 const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
 setTimeout(restart, MILLISECONDS_IN_A_DAY);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use explanatory variables
 
-**Bad:**
+### 使用解释性的变量
+
+**不好的：**
 
 ```ts
 declare const users: Map<string, User>;
@@ -187,7 +207,7 @@ for (const keyValue of users) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 declare const users: Map<string, User>;
@@ -197,14 +217,18 @@ for (const [id, user] of users) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid Mental Mapping
+
+### 避免心理映射
 
 Explicit is better than implicit.  
 *Clarity is king.*
 
-**Bad:**
+显示比隐式更好。 *清晰为王!*
+
+**不好的：**
 
 ```ts
 const u = getUser();
@@ -212,7 +236,7 @@ const s = getSubscription();
 const t = charge(u, s);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const user = getUser();
@@ -220,13 +244,17 @@ const subscription = getSubscription();
 const transaction = charge(user, subscription);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't add unneeded context
 
+### 不添加不必要的上下文
+
 If your class/type/object name tells you something, don't repeat that in your variable name.
 
-**Bad:**
+如果你的类/类型/对象名有意义， 不必在变量名上再重复。
+
+**不好的：**
 
 ```ts
 type Car = {
@@ -240,7 +268,7 @@ function print(car: Car): void {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 type Car = {
@@ -254,13 +282,17 @@ function print(car: Car): void {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use default arguments instead of short circuiting or conditionals
 
+### 使用默认变量替代短路运算或条件
+
 Default arguments are often cleaner than short circuiting.
 
-**Bad:**
+默认参数通常比短路运算更清晰。
+
+**不好的：**
 
 ```ts
 function loadPages(count?: number) {
@@ -269,7 +301,7 @@ function loadPages(count?: number) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function loadPages(count: number = 10) {
@@ -277,7 +309,7 @@ function loadPages(count: number = 10) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Functions
 
