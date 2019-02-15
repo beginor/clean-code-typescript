@@ -1817,9 +1817,16 @@ const query = new QueryBuilder()
 
 ### Single Responsibility Principle (SRP)
 
+### 单一职责原则 (SRP)
+
 As stated in Clean Code, "There should never be more than one reason for a class to change". It's tempting to jam-pack a class with a lot of functionality, like when you can only take one suitcase on your flight. The issue with this is that your class won't be conceptually cohesive and it will give it many reasons to change. Minimizing the amount of times you need to change a class is important. It's important because if too much functionality is in one class and you modify a piece of it, it can be difficult to understand how that will affect other dependent modules in your codebase.
 
-**Bad:**
+正如代码整洁之道所述， “永远不要有超过一个理由来修改一个类”。 给一个类塞满许多功能， 就像你在航
+班上只能带一个行李箱一样， 这样做的问题你的类不会有理想的内聚性， 将会有太多的理由来对它进行修改。
+最小化需要修改一个类的次数时很重要的， 因为如果一个类拥有太多的功能， 一旦你修改它的一小部分，
+将会很难弄清楚会对代码库中的其它模块造成什么影响。
+
+**不好的：**
 
 ```ts
 class UserSettings {
@@ -1838,7 +1845,7 @@ class UserSettings {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class UserAuth {
@@ -1866,13 +1873,18 @@ class UserSettings {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Open/Closed Principle (OCP)
 
+### 开闭原则 (OCP)
+
 As stated by Bertrand Meyer, "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." What does that mean though? This principle basically states that you should allow users to add new functionalities without changing existing code.
 
-**Bad:**
+Bertrand Meyer 说过， “软件实体 (类， 模块， 函数等) 应该为扩展开放， 但是为修改关闭。” 这
+是什么意思呢？ 这个原则基本上说明了你应该允许用户添加功能而不必修改现有的代码。
+
+**不好的：**
 
 ```ts
 class AjaxAdapter extends Adapter {
@@ -1915,7 +1927,7 @@ function makeHttpCall<T>(url: string): Promise<T> {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 abstract class Adapter {
@@ -1959,15 +1971,25 @@ class HttpRequester {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Liskov Substitution Principle (LSP)
+
+### 里氏代换原则 (LSP)
 
 This is a scary term for a very simple concept. It's formally defined as "If S is a subtype of T, then objects of type T may be replaced with objects of type S (i.e., objects of type S may substitute objects of type T) without altering any of the desirable properties of that program (correctness, task performed, etc.)." That's an even scarier definition.  
   
 The best explanation for this is if you have a parent class and a child class, then the base class and child class can be used interchangeably without getting incorrect results. This might still be confusing, so let's take a look at the classic Square-Rectangle example. Mathematically, a square is a rectangle, but if you model it using the "is-a" relationship via inheritance, you quickly get into trouble.
 
-**Bad:**
+这是针对一个非常简单的里面的一个恐怖意图， 它的正式定义是： “如果 S 是 T 的一个子类型， 那么类
+型为 T 的对象可以被类型为 S 的对象替换（例如， 类型为 S 的对象可作为类型为 T 的替代品）儿不需
+要修改目标程序的期望性质 （正确性、 任务执行性等）。” 这甚至是个恐怖的定义。
+
+最好的解释是， 如果你又一个基类和一个子类， 那个基类和字类可以互换而不会产生不正确的结果。 这可
+能还有有些疑惑， 让我们来看一下这个经典的正方形与矩形的例子。 从数学上说， 一个正方形是一个矩形，
+但是你用 "is-a" 的关系用继承来实现， 你将很快遇到麻烦。
+
+**不好的：**
 
 ```ts
 class Rectangle {
@@ -2028,7 +2050,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 abstract class Shape {
@@ -2076,14 +2098,20 @@ const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Interface Segregation Principle (ISP)
+
+### 接口隔离原则 (ISP)
 
 ISP states that "Clients should not be forced to depend upon interfaces that they do not use.". This principle is very much related to the Single Responsibility Principle.
 What it really means is that you should always design your abstractions in a way that the clients that are using the exposed methods do not get the whole pie instead. That also include imposing the clients with the burden of implementing methods that they don’t actually need.
 
-**Bad:**
+接口隔离原则说的是 “客户端不应该强制依赖他们不需要的接口。” 这个原则与单一职责原则紧密相关。
+
+它的真正含义是你应该总是设计一种抽象的方式，使用部分方法的客户端不会得到全部实现。 这还包括禁止客户端实现他们不需要的方法。
+
+**不好的：**
 
 ```ts
 interface SmartPrinter {
@@ -2121,7 +2149,7 @@ class EconomicPrinter implements SmartPrinter {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 interface Printer {
@@ -2157,9 +2185,11 @@ class EconomicPrinter implements Printer {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Dependency Inversion Principle (DIP)
+
+### 依赖反转原则 (DIP)
 
 This principle states two essential things:
 
@@ -2167,11 +2197,20 @@ This principle states two essential things:
 
 2. Abstractions should not depend upon details. Details should depend on abstractions.
 
+这个原则阐述了两个重要的事情：
+
+1. 高级模块不应该依赖于低级模块， 两者都应该依赖与抽象；
+2. 抽象不应当依赖于具体实现， 具体实现应当依赖于抽象。
+
 This can be hard to understand at first, but if you've worked with Angular, you've seen an implementation of this principle in the form of Dependency Injection (DI). While they are not identical concepts, DIP keeps high-level modules from knowing the details of its low-level modules and setting them up. It can accomplish this through DI. A huge benefit of this is that it reduces the coupling between modules. Coupling is a very bad development pattern because it makes your code hard to refactor.  
-  
+
+这个一开始会很难理解， 但是如果你使用过 Angular.js ， 你应该已经看到过通过依赖注入来实现的这个原则， 虽然他们不是相同的概念， 依赖反转原则让高级模块远离低级模块的细节和创建， 可以通过 DI 来实现。 这样做的巨大益处是降低模块间的耦合。 耦合是一个非常糟糕的开发模式， 因为会导致代码难于重构。
+
 DIP is usually achieved by a using an inversion of control (IoC) container. An example of a powerful IoC container for TypeScript is [InversifyJs](https://www.npmjs.com/package/inversify)
 
-**Bad:**
+DIP 通常通过使用控制反转 (IoC) 容器来达到。 [InversifyJs](https://www.npmjs.com/package/inversify) 是 TypeScript 下的一个强大的 IoC 容器示例。
+
+**不好的：**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2206,7 +2245,7 @@ const reader = new ReportReader();
 await report = await reader.read('report.xml');
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { readFile as readFileCb } from 'fs';
@@ -2254,7 +2293,7 @@ const reader = new ReportReader(new JsonFormatter());
 await report = await reader.read('report.json');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Testing
 
