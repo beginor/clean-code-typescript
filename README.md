@@ -1284,7 +1284,11 @@ itiriri(fibonacci())
 
 ## Objects and Data Structures
 
+## 对象和数据结构
+
 ### Use getters and setters
+
+### 使用 getter 和 setter
 
 TypeScript supports getter/setter syntax.
 Using getters and setters to access data from objects that encapsulate behavior could be better that simply looking for a property on an object.
@@ -1296,7 +1300,16 @@ Using getters and setters to access data from objects that encapsulate behavior 
 - Easy to add logging and error handling when getting and setting.
 - You can lazy load your object's properties, let's say getting it from a server.
 
-**Bad:**
+TypeScript 支持 getter/setter 语法。 正因为如此， 使用 getters 和 setters 来访问对象上的数据比简单的在一个对象上查找属性
+要好得多。 “为什么？” 你可能会问， 好吧， 原因请看下面的列表：
+
+* 当你想在获取一个对象属性的背后做更多的事情时， 你不需要在代码库中查找和修改每一处访问；
+* 使用 `set` 可以让添加验证变得容易；
+* 封装内部实现；
+* 使用 getting 和 setting 时， 容易添加日志和错误处理；
+* 你可以延迟加载对象的属性， 比如说从服务器获取。
+
+**不好的：**
 
 ```ts
 type BankAccount = {
@@ -1317,7 +1330,7 @@ if (value < 0) {
 account.balance = value;
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class BankAccount {
@@ -1342,17 +1355,22 @@ class BankAccount {
 // If one day the specifications change, and we need extra validation rule,
 // we would have to alter only the `setter` implementation,
 // leaving all dependent code unchanged.
+// 现在 `BankAccount` 封装了验证逻辑， 如果某一天需求变化了， 需要添加额外的验证规则， 我们只需要修改 `setter` 即可， 其它依赖性代码则无需修改。
 const account = new BankAccount();
 account.balance = 100;
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Make objects have private/protected members
 
+### 让对象拥有私有的/受保护的成员
+
 TypeScript supports `public` *(default)*, `protected` and `private` accessors on class members.  
 
-**Bad:**
+TypeScript 支持在类成员上添加 `public` *(默认)* ， `protected` 和 `private` 修饰符。
+
+**不好的：**
 
 ```ts
 class Circle {
@@ -1372,7 +1390,7 @@ class Circle {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class Circle {
@@ -1389,14 +1407,18 @@ class Circle {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Prefer immutability
+
+### 倾向于不可变性
 
 TypeScript's type system allows you to mark individual properties on an interface / class as *readonly*. This allows you to work in a functional way (unexpected mutation is bad).  
 For more advanced scenarios there is a built-in type `Readonly` that takes a type `T` and marks all of its properties as readonly using mapped types (see [mapped types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types)).
 
-**Bad:**
+TypeScript 的类型系统允许将类/接口的某些属性标记为 *只读* 。 这允许你在一个很舒适的方式下工作（不需要考虑意外的变化）。 针对更加高级的场景， 有一个内置的 `Readonly` 类型， 它接受一个类型 `T` ， 实用类型映射， 将类型 `T` 的全部属性统统标记为只读（参考 [mapped types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types)）。
+
+**不好的：**
 
 ```ts
 interface Config {
@@ -1406,7 +1428,7 @@ interface Config {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 interface Config {
@@ -1416,14 +1438,18 @@ interface Config {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### type vs. interface
+
+### 类型 vs. 接口
 
 Use type when you might need a union or intersection. Use interface when you want `extends` or `implements`. There is no strict rule however, use the one that works for you.  
 For a more detailed explanation refer to this [answer](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/54101543#54101543) about the differences between `type` and `interface` in TypeScript.
 
-**Bad:**
+当需要并集或者交集时， 实用类型。 当需要扩展或实现时， 实用接口。 然而并没有严格的规则， 哪个适合就用哪个。 若需要一个更加详细的解释， 请参考关于 TypeScript 的类型和接口之间的不同的这个[答案](https://stackoverflow.com/questions/37233735/typescript-interfaces-vs-types/54101543#54101543)。
+
+**不好的：**
 
 ```ts
 interface EmailConfig {
@@ -1445,7 +1471,7 @@ type Shape = {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 
@@ -1474,7 +1500,7 @@ class Square implements Shape {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Classes
 
