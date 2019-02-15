@@ -1504,11 +1504,17 @@ class Square implements Shape {
 
 ## Classes
 
+## 类
+
 ### Classes should be small
+
+### 类应当小
 
 The class' size is measured by it's responsibility. Following the *Single Responsibility principle* a class should be small.
 
-**Bad:**
+类的大小由它的职责衡量。 根据 *单一职责原则* 一个类应该小。
+
+**不好的：**
 
 ```ts
 class Dashboard {
@@ -1531,7 +1537,7 @@ class Dashboard {
 
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class Dashboard {
@@ -1541,12 +1547,15 @@ class Dashboard {
 }
 
 // split the responsibilities by moving the remaining methods to other classes
+// 将其它方法移到其它类以拆分职责
 // ...
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### High cohesion and low coupling
+
+### 高内聚和低耦合
 
 Cohesion defines the degree to which class members are related to each other. Ideally, all fields within a class should be used by each method.
 We then say that the class is *maximally cohesive*. In practice, this however is not always possible, nor even advisable. You should however prefer cohesion to be high.  
@@ -1555,7 +1564,14 @@ Coupling refers to how related or dependent are two classes toward each other. C
   
 Good software design has **high cohesion** and **low coupling**.
 
-**Bad:**
+内聚定义了类成员彼此相关的程度。 理想情况下，每个方法都应使用类中的所有字段。
+然后我们说这个类是*最高内聚*。 实际上， 这并非总是可行， 甚至不可取。 但是你应该更喜欢高内聚。
+
+耦合指的是两个类相互依赖或相互依赖的程度。 如果其中一个类中的更改不影响其它的， 则称这些类是低耦合的。
+
+好的软件设计拥有 **高内聚** 和 **低耦合** 。
+
+**不好的：**
 
 ```ts
 class UserManager {
@@ -1563,6 +1579,7 @@ class UserManager {
   // It makes clear evidence that the class is holding more than a single responsibility.
   // If I need only to create the service to get the transactions for a user,
   // I'm still forced to pass and instance of `emailSender`.
+  // 不好的： 每一个私有变量仅仅被一组或另一组方法使用， 这很明显说明这个类在兼负多个职责。 当我仅仅需要一个服务来获取用户事务时， 还得传递另外一个 `emailSender` 的实例。
   constructor(
     private readonly db: Database,
     private readonly emailSender: EmailSender) {
@@ -1590,7 +1607,7 @@ class UserManager {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class UserService {
@@ -1624,9 +1641,11 @@ class UserNotifier {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Prefer composition over inheritance
+
+### 组合优先于继承
 
 As stated famously in [Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four, you should *prefer composition over inheritance* where you can. There are lots of good reasons to use inheritance and lots of good reasons to use composition. The main point for this maxim is that if your mind instinctively goes for inheritance, try to think if composition could model your problem better. In some cases it can.  
   
@@ -1638,7 +1657,19 @@ You might be wondering then, "when should I use inheritance?" It depends on your
 
 3. You want to make global changes to derived classes by changing a base class. (Change the caloric expenditure of all animals when they move).
 
-**Bad:**
+正如[*设计模式四人帮*](https://en.wikipedia.org/wiki/Design_Patterns)所述， 如果可能，
+你应该优先使用组合而不是继承。 有许多好的理由去使用继承， 也有许多好的理由去使用组合。这个格言
+的重点是， 如果你本能的观点是继承， 那么请想一下组合能否更好的为你的问题建模。 很多情况下它真的
+可以。
+
+那么你也许会这样想， “我什么时候改使用继承？” 这取决于你手上的问题， 不过这儿有一个像样的列表说
+明什么时候继承比组合更好用：
+
+1. 你的继承表示"是一个"的关系而不是"有一个"的关系（人类->动物 vs 用户->用户详情）；
+2. 你可以重用来自基类的代码（人可以像所有动物一样行动）；
+3. 你想通过基类对子类进行全局的修改（改变所有动物行动时的热量消耗）；
+
+**不好的：**
 
 ```ts
 class Employee {
@@ -1651,6 +1682,7 @@ class Employee {
 }
 
 // Bad because Employees "have" tax data. EmployeeTaxData is not a type of Employee
+// 不好是因为雇员“有”税率数据， EmployeeTaxData 不是一个 Employee 类型。
 class EmployeeTaxData extends Employee {
   constructor(
     name: string,
@@ -1664,7 +1696,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**Good:**
+**不好的：**
 
 ```ts
 class Employee {
@@ -1693,13 +1725,17 @@ class EmployeeTaxData {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use method chaining
 
+### 使用方法链
+
 This pattern is very useful and commonly used in many libraries. It allows your code to be expressive, and less verbose. For that reason, use method chaining and take a look at how clean your code will be.
 
-**Bad:**
+这个模式在 JavaScript 中是非常有用的， 并且在许多类库使用。 它使你的代码变得富有表现力， 并减少啰嗦。 因为这个原因， 我说， 使用方法链然后再看看你的代码会变得多么简洁。
+
+**不好的：**
 
 ```ts
 class QueryBuilder {
@@ -1736,7 +1772,7 @@ queryBuilder.orderBy('firstName', 'lastName');
 const query = queryBuilder.build();
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class QueryBuilder {
@@ -1775,7 +1811,7 @@ const query = new QueryBuilder()
   .build();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## SOLID
 
