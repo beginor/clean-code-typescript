@@ -1440,7 +1440,7 @@ interface Config {
 
 //...
 
-type Shape {
+type Shape = {
   // ...
 }
 ```
@@ -1449,11 +1449,11 @@ type Shape {
 
 ```ts
 
-type EmailConfig {
+type EmailConfig = {
   // ...
 }
 
-type DbConfig {
+type DbConfig = {
   // ...
 }
 
@@ -2613,8 +2613,8 @@ const Artists = ['ACDC', 'Led Zeppelin', 'The Beatles'];
 function eraseDatabase() {}
 function restore_database() {}
 
-type animal { /* ... */ }
-type Container { /* ... */ }
+type animal = { /* ... */ }
+type Container = { /* ... */ }
 ```
 
 **Good:**
@@ -2629,8 +2629,8 @@ const ARTISTS = ['ACDC', 'Led Zeppelin', 'The Beatles'];
 function eraseDatabase() {}
 function restoreDatabase() {}
 
-type Animal { /* ... */ }
-type Container { /* ... */ }
+type Animal = { /* ... */ }
+type Container = { /* ... */ }
 ```
 
 Prefer using `PascalCase` for class, interface, type and namespace names.  
@@ -2980,12 +2980,14 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 
 ## Translations
 
-There is work in progress for translating this to:
+This is also available in other languages:
+- ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
 
-- Brazilian portuguese
-- Chinese
-- Japanese
-- Korean
+There is work in progress for translating this to other languages:
+
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) Chinese
+- ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) Japanese
+- ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) Korean
 
 References will be added once translations are completed.  
 Check this [discussion](https://github.com/labs42io/clean-code-typescript/issues/15) for more details and progress.
