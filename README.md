@@ -311,18 +311,29 @@ function loadPages(count: number = 10) {
 
 **[⬆ 返回目录](#目录)**
 
-## Functions
+## Functions 函数
 
 ### Function arguments (2 or fewer ideally)
 
+### 函数参数 (两个以下最理想)
+
 Limiting the amount of function parameters is incredibly important because it makes testing your function easier.
 Having more than three leads to a combinatorial explosion where you have to test tons of different cases with each separate argument.  
+
+限制函数参数的个数是非常重要的， 因为这样将使你的函数容易进行测试。 一旦超过三个参数将会导致组
+合爆炸， 因为你不得不编写大量针对每个参数的测试用例。
 
 One or two arguments is the ideal case, and three should be avoided if possible. Anything more than that should be consolidated.
 Usually, if you have more than two arguments then your function is trying to do too much.
 In cases where it's not, most of the time a higher-level object will suffice as an argument.  
 
+一个或者两个参数是理想状况， 如果可能的话， 三个参数的情况应该避免， 超过三个应该被重构。 通常，
+如果你有一个超过两个函数的参数， 那就意味着你的函数尝试做太多的事情。 如果不是， 多数情况下一个
+更高级对象可能会满足需求。
+
 Consider using object literals if you are finding yourself needing a lot of arguments.  
+
+当你发现你自己需要大量的参数时， 考虑使用一个对象。
 
 To make it obvious what properties the function expects, you can use the [destructuring](https://basarat.gitbooks.io/typescript/docs/destructuring.html) syntax.
 This has a few advantages:
@@ -333,7 +344,15 @@ This has a few advantages:
 
 3. TypeScript warns you about unused properties, which would be impossible without destructuring.
 
-**Bad:**
+为了让函数需要的属性更明显， 可以使用[解构](https://basarat.gitbooks.io/typescript/docs/destructuring.html)语法。 它有三个优点：
+
+1. 当有人查看函数签名时， 会立刻清楚用到了哪些属性。
+
+2. 解构还克隆传递给函数的参数对象的指定原始值。 这有助于预防副作用。 注意：不会克隆参数对象中解构的对象和数组。
+
+3. TypeScript 会警告您未使用的属性，如果没有解构，这将是不可能的。
+
+**不好的：**
 
 ```ts
 function createMenu(title: string, body: string, buttonText: string, cancellable: boolean) {
@@ -343,7 +362,7 @@ function createMenu(title: string, body: string, buttonText: string, cancellable
 createMenu('Foo', 'Bar', 'Baz', true);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function createMenu(options: { title: string, body: string, buttonText: string, cancellable: boolean }) {
@@ -359,6 +378,8 @@ createMenu({
 ```
 
 You can further improve readability by using [type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases):
+
+你可以通过[类型别名](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases)来显著提高可读性：
 
 ```ts
 
@@ -376,13 +397,20 @@ createMenu({
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Functions should do one thing
 
+### 函数应当只做一件事情
+
 This is by far the most important rule in software engineering. When functions do more than one thing, they are harder to compose, test, and reason about. When you can isolate a function to just one action, they can be refactored easily and your code will read much cleaner. If you take nothing else away from this guide other than this, you'll be ahead of many developers.
 
-**Bad:**
+
+这是软件工程中最重要的一条规则， 当函数需要做更多的事情时， 它们将会更难进行编写、 测试和推理。
+当你能将一个函数隔离到只有一个动作， 他们将能够被容易的进行重构并且你的代码将会更容易阅读。 如
+果你严格遵守本指南中的这一条， 你将会领先于许多开发者。
+
+**不好的：**
 
 ```ts
 function emailClients(clients: Client) {
@@ -395,7 +423,7 @@ function emailClients(clients: Client) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function emailClients(clients: Client) {
@@ -408,11 +436,13 @@ function isActiveClient(client: Client) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Function names should say what they do
 
-**Bad:**
+### 函数名称应该说明它要做什么
+
+**不好的：**
 
 ```ts
 function addToDate(date: Date, month: number): Date {
@@ -422,10 +452,11 @@ function addToDate(date: Date, month: number): Date {
 const date = new Date();
 
 // It's hard to tell from the function name what is added
+// 很难从函数名看出加了什么
 addToDate(date, 1);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function addMonthToDate(date: Date, month: number): Date {
@@ -436,13 +467,17 @@ const date = new Date();
 addMonthToDate(date, 1);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Functions should only be one level of abstraction
 
+### 函数应该只有一个抽象级别
+
 When you have more than one level of abstraction your function is usually doing too much. Splitting up functions leads to reusability and easier testing.
 
-**Bad:**
+当在你的函数中有多于一个抽象级别时， 你的函数通常做了太多事情。 拆分函数将会提升重用性和测试性。
+
+**不好的：**
 
 ```ts
 function parseCode(code: string) {
@@ -467,7 +502,7 @@ function parseCode(code: string) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const REGEXES = [ /* ... */ ];
@@ -504,22 +539,40 @@ function parse(tokens: Token[]): SyntaxTree {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Remove duplicate code
 
+### 移除冗余代码
+
 Do your absolute best to avoid duplicate code.
 Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.  
+
+竭尽你的全力去避免冗余代码。 冗余代码是不好的， 因为它意味着当你需要修改一些逻辑时会有多个地方
+需要修改。
 
 Imagine if you run a restaurant and you keep track of your inventory: all your tomatoes, onions, garlic, spices, etc.
 If you have multiple lists that you keep this on, then all have to be updated when you serve a dish with tomatoes in them.
 If you only have one list, there's only one place to update!  
 
+想象一下你在经营一家餐馆， 你需要记录所有的库存西红柿， 洋葱， 大蒜， 各种香料等等。 如果你有多
+个记录列表， 当你用西红柿做一道菜时你得更新多个列表。 如果你只有一个列表， 就只有一个地方需要更
+新！
+
+
 Oftentimes you have duplicate code because you have two or more slightly different things, that share a lot in common, but their differences force you to have two or more separate functions that do much of the same things. Removing duplicate code means creating an abstraction that can handle this set of different things with just one function/module/class.  
+
+你有冗余代码通常是因为你有两个或多个稍微不同的东西， 它们共享大部分， 但是它们的不同之处迫使你使
+用两个或更多独立的函数来处理大部分相同的东西。 移除冗余代码意味着创建一个可以处理这些不同之处的
+抽象的函数/模块/类。
 
 Getting the abstraction right is critical, that's why you should follow the [SOLID](#solid) principles. Bad abstractions can be worse than duplicate code, so be careful! Having said this, if you can make a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself updating multiple places anytime you want to change one thing.
 
-**Bad:**
+让这个抽象正确是关键的， 这是为什么要你遵循 *Classes* 那一章的 SOLID 的原因。 不好的抽象比冗
+余代码更差， 所以要谨慎行事。 既然已经这么说了， 如果你能够做出一个好的抽象， 才去做。 不要重复
+你自己， 否则你会发现当你要修改一个东西时时刻需要修改多个地方。
+
+**不好的：**
 
 ```ts
 function showDeveloperList(developers: Developer[]) {
@@ -555,7 +608,7 @@ function showManagerList(managers: Manager[]) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class Developer {
@@ -595,11 +648,15 @@ function showEmployeeList(employee: Developer | Manager) {
 
 You should be critical about code duplication. Sometimes there is a tradeoff between duplicated code and increased complexity by introducing unnecessary abstraction. When two implementations from two different modules look similar but live in different domains, duplication might be acceptable and preferred over extracting the common code. The extracted common code in this case introduces an indirect dependency between the two modules.
 
-**[⬆ back to top](#table-of-contents)**
+您应该对代码冗余持批判的态度。 有时需要在冗余代码和通过因不必要的抽象而增加的复杂性之间做权衡。 当来自两个不同模块的两个实现看起来相似但存在于不同的域中时，冗余(可能)是可接受的并且优于提取公共代码。 在这种情况下，提取的公共代码引入了两个模块之间的间接依赖关系。
+
+**[⬆ 返回目录](#目录)**
 
 ### Set default objects with Object.assign or destructuring
 
-**Bad:**
+### 使用 Object.assign 设置默认对象或者结构
+
+**不好的：**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -616,7 +673,7 @@ function createMenu(config: MenuConfig) {
 createMenu({ body: 'Bar' });
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
@@ -637,6 +694,8 @@ createMenu({ body: 'Bar' });
 
 Alternatively, you can use destructuring with default values:
 
+另外， 也可以使用结构来处理默认值：
+
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
 
@@ -650,14 +709,21 @@ createMenu({ body: 'Bar' });
 To avoid any side effects and unexpected behavior by passing in explicitly the `undefined` or `null` value, you can tell the TypeScript compiler to not allow it.
 See [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks) option in TypeScript.
 
-**[⬆ back to top](#table-of-contents)**
+要避免显示传递 `undefined` 或者 `null` 值产生的负面影响或异常行为， 可以设置 TypeScript 编译器来禁止。 请查看 TypeScript 的 [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#--strictnullchecks) 选项。
+
+**[⬆ 返回目录](#目录)**
 
 ### Don't use flags as function parameters
+
+### 不要使用标记位做为函数参数
 
 Flags tell your user that this function does more than one thing.
 Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
 
-**Bad:**
+标记位是告诉你的用户这个函数做了不只一件事情。 函数应该只做一件事情。 如果你的函数因为一个布尔值
+出现不同的代码路径， 请拆分它们。
+
+**不好的：**
 
 ```ts
 function createFile(name: string, temp: boolean) {
@@ -669,7 +735,7 @@ function createFile(name: string, temp: boolean) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function createTempFile(name: string) {
@@ -681,23 +747,36 @@ function createFile(name: string) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid Side Effects (part 1)
 
+### 避免副作用（第 1 部分）
+
 A function produces a side effect if it does anything other than take a value in and return another value or values.
 A side effect could be writing to a file, modifying some global variable, or accidentally wiring all your money to a stranger.  
+
+如果一个函数做了除接受一个值然后返回一个值或多个值之外的任何事情， 它将会产生副作用， 它可能是
+写入一个文件， 修改一个全局变量， 或者意外的把你所有的钱连接到一个陌生人那里。
 
 Now, you do need to have side effects in a program on occasion. Like the previous example, you might need to write to a file.
 What you want to do is to centralize where you are doing this. Don't have several functions and classes that write to a particular file.
 Have one service that does it. One and only one.  
 
+现在在你的程序中确实偶尔需要副作用， 就像上面的代码， 你也许需要写入到一个文件， 你需要做的是集
+中化你要做的事情， 不要让多个函数或者类写入一个特定的文件， 用一个服务来实现它， 一个并且只有一
+个。
+
 The main point is to avoid common pitfalls like sharing state between objects without any structure, using mutable data types that can be written to by anything, and not centralizing where your side effects occur. If you can do this, you will be happier than the vast majority of other programmers.
 
-**Bad:**
+重点是避免这些常见的易犯的错误， 比如在对象之间共享状态而不使用任何结构， 使用任何地方都可以写入
+的可变的数据类型， 没有集中化导致副作用。 如果你能做到这些， 那么你将会比其它的码农大军更加幸福。
+
+**不好的：**
 
 ```ts
 // Global variable referenced by following function.
+// 全局变量被下面的函数引用
 let name = 'Robert C. Martin';
 
 function toBase64() {
@@ -706,11 +785,14 @@ function toBase64() {
 
 toBase64();
 // If we had another function that used this name, now it'd be a Base64 value
+// 如果我们有另一个函数使用这个 name ， 现在它应该是一个 Base64 字符串值。
 
-console.log(name); // expected to print 'Robert C. Martin' but instead 'Um9iZXJ0IEMuIE1hcnRpbg=='
+// expected to print 'Robert C. Martin' but instead 'Um9iZXJ0IEMuIE1hcnRpbg=='
+// 期望打印出 'Robert C. Martin' 但是却是 'Um9iZXJ0IEMuIE1hcnRpbg=='
+console.log(name);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const name = 'Robert C. Martin';
@@ -723,23 +805,37 @@ const encodedName = toBase64(name);
 console.log(name);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid Side Effects (part 2)
 
+### 避免副作用 （第 2 部分）
+
 In JavaScript, primitives are passed by value and objects/arrays are passed by reference. In the case of objects and arrays, if your function makes a change in a shopping cart array, for example, by adding an item to purchase, then any other function that uses that `cart` array will be affected by this addition. That may be great, however it can be bad too. Let's imagine a bad situation:  
+
+在 JavaScript 中， 基本类型通过值进行传递而对象/类通过引用传递。 以对象和数组为例， 如果你的函数对一个购物车数组做出了更改， 比如添加了一个要购买的东西， 那么其它使用这个购物车数组的任何函数都会受到影响。 这样貌似挺不错的， 不过也可能很糟糕。 让我们来想象一个糟糕的情况：
 
 The user clicks the "Purchase", button which calls a `purchase` function that spawns a network request and sends the `cart` array to the server. Because of a bad network connection, the purchase function has to keep retrying the request. Now, what if in the meantime the user accidentally clicks "Add to Cart" button on an item they don't actually want before the network request begins? If that happens and the network request begins, then that purchase function will send the accidentally added item because it has a reference to a shopping cart array that the `addItemToCart` function modified by adding an unwanted item.  
 
+用户点击“购买”按钮， 调用一个 `purchase` 函数， 发出一个网络请求， 经购物车数组发送到服务器。 由于网络情况比较差， `purchase` 函数只能尝试重新发送请求。 现在， 用户在网络请求开始之前， 突然点击了“添加到购物车”按钮， 添加了一项并不是真心想买的东西， 那么 `purchase` 函数将会发送这个突然被添加的项目， 因为它们引用了同一个购物车数组对象， 而这个对象 `addItemToCart` 函数修改了， 添加了一个不想要的项目。
+
 A great solution would be for the `addItemToCart` to always clone the `cart`, edit it, and return the clone. This ensures that no other functions that are holding onto a reference of the shopping cart will be affected by any changes.  
 
+一个好的方案应该是让 `addItemToCart` 始终克隆一个购物车副本， 编辑并返回副本。 这样能够保证它不会被其它任何函数引用， 也就不能进行修改。
+
 Two caveats to mention to this approach:
+
+这种方案下需要注意一下 2 个问题：
 
 1. There might be cases where you actually want to modify the input object, but when you adopt this programming practice you will find that those cases are pretty rare. Most things can be refactored to have no side effects! (see [pure function](https://en.wikipedia.org/wiki/Pure_function))
 
 2. Cloning big objects can be very expensive in terms of performance. Luckily, this isn't a big issue in practice because there are great libraries that allow this kind of programming approach to be fast and not as memory intensive as it would be for you to manually clone objects and arrays.
 
-**Bad:**
+1. 可能在有些情况下确实需要修改输入对象， 但是当你采用这种编程实践之后， 你会发现这种情况是寥寥无几的。 很多东西可以被重构来消除负面影响。 （参考[纯函数](https://zh.wikipedia.org/wiki/%E7%BA%AF%E5%87%BD%E6%95%B0)/[Pure function](https://en.wikipedia.org/wiki/Pure_function)）
+
+2. 克隆大对象可能比较消耗性能。 幸运的是， 在实际操作上， 并不是一个多大的问题， 因为有优秀的类库可以让这一操作变得非常快， 同时也比手工克隆这些对象和数组节省很多内存。
+
+**不好的：**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): void {
@@ -747,7 +843,7 @@ function addItemToCart(cart: CartItem[], item: Item): void {
 };
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
@@ -755,13 +851,22 @@ function addItemToCart(cart: CartItem[], item: Item): CartItem[] {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't write to global functions
 
+### 不要写入全局函数
+
 Polluting globals is a bad practice in JavaScript because you could clash with another library and the user of your API would be none-the-wiser until they get an exception in production. Let's think about an example: what if you wanted to extend JavaScript's native Array method to have a `diff` method that could show the difference between two arrays? You could write your new function to the `Array.prototype`, but it could clash with another library that tried to do the same thing. What if that other library was just using `diff` to find the difference between the first and last elements of an array? This is why it would be much better to just use classes and simply extend the `Array` global.
 
-**Bad:**
+污染全局在 JavaScript 中是一个不好的做法， 因为你可能会和另外一个类库冲突， 你的 API 的用户
+可能不够聪明， 直到他们得到在生产环境得到一个异常。 让我们来考虑这样一个例子： 假设你要扩展
+JavaScript 的 原生 `Array` ， 添加一个可以显示两个数组的不同之处的 `diff` 方法， 你可以在
+`Array.prototype` 中写一个新的方法， 但是它可能会和尝试做相同事情的其它类库发生冲突。 如果有
+另外一个类库仅仅使用 `diff` 方法来查找数组的第一个元素和最后一个元素之间的不同之处呢？ 这就是
+为什么使用 ES2015/ES6 的类是一个更好的做法的原因， 只要简单的扩展全局的 `Array` 即可。
+
+**不好的：**
 
 ```ts
 declare global {
@@ -778,7 +883,7 @@ if (!Array.prototype.diff) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class MyArray<T> extends Array<T> {
@@ -789,13 +894,17 @@ class MyArray<T> extends Array<T> {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Favor functional programming over imperative programming
 
+### 函数式编程优于指令式编程
+
 Favor this style of programming when you can.
 
-**Bad:**
+当你可以使用函数式编程风格时请尽情使用。
+
+**不好的：**
 
 ```ts
 const contributions = [
@@ -821,7 +930,7 @@ for (let i = 0; i < contributions.length; i++) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const contributions = [
@@ -844,11 +953,13 @@ const totalOutput = contributions
   .reduce((totalLines, output) => totalLines + output.linesOfCode, 0);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Encapsulate conditionals
 
-**Bad:**
+### 封装条件语句
+
+**不好的：**
 
 ```ts
 if (subscription.isTrial || account.balance > 0) {
@@ -856,7 +967,7 @@ if (subscription.isTrial || account.balance > 0) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function canActivateService(subscription: Subscription, account: Account) {
@@ -868,11 +979,13 @@ if (canActivateService(subscription, account)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid negative conditionals
 
-**Bad:**
+### 避免负面条件
+
+**不好的：**
 
 ```ts
 function isEmailNotUsed(email: string): boolean {
@@ -884,7 +997,7 @@ if (isEmailNotUsed(email)) {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function isEmailUsed(email): boolean {
@@ -896,13 +1009,21 @@ if (!isEmailUsed(node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid conditionals
 
+### 避免条件语句
+
 This seems like an impossible task. Upon first hearing this, most people say, "how am I supposed to do anything without an `if` statement?" The answer is that you can use polymorphism to achieve the same task in many cases. The second question is usually, "well that's great but why would I want to do that?" The answer is a previous clean code concept we learned: a function should only do one thing. When you have classes and functions that have `if` statements, you are telling your user that your function does more than one thing. Remember, just do one thing.
 
-**Bad:**
+这看起来似乎是一个不可能的任务。 第一次听到这个时， 多数人会说： “没有 `if` 语句还能期望我干
+啥呢”， 答案是多数情况下你可以使用多态来完成同样的任务。 第二个问题通常是 “好了， 那么做很棒，
+但是我为什么想要那样做呢”， 答案是我们学到的上一条代码整洁之道的理念： 一个函数应当只做一件事情。
+当你有使用 `if` 语句的类/函数是， 你在告诉你的用户你的函数做了不止一件事情。 记住： 只做一件
+事情。
+
+**不好的：**
 
 ```ts
 class Airplane {
@@ -928,7 +1049,7 @@ class Airplane {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 abstract class Airplane {
@@ -961,15 +1082,21 @@ class Cessna extends Airplane {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid type checking
+
+### 避免类型检查
 
 TypeScript is a strict syntactical superset of JavaScript and adds optional static type checking to the language.
 Always prefer to specify types of variables, parameters and return values to leverage the full power of TypeScript features.
 It makes refactoring more easier.
 
-**Bad:**
+TypeScript 是 JavaScript 的一个严格语法的超急， 为这门语言增加了可选的静态类型检查。
+始终倾向于给变量、 参数以及返回值定义类型一体现 TypeScript 的完整特征。
+这将使重构变得更加容易。
+
+**不好的**
 
 ```ts
 function travelToTexas(vehicle: Bicycle | Car) {
@@ -981,7 +1108,7 @@ function travelToTexas(vehicle: Bicycle | Car) {
 }
 ```
 
-**Good:**
+**好的**
 
 ```ts
 type Vehicle = Bicycle | Car;
@@ -991,23 +1118,31 @@ function travelToTexas(vehicle: Vehicle) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't over-optimize
 
+### 不要过度优化
+
 Modern browsers do a lot of optimization under-the-hood at runtime. A lot of times, if you are optimizing then you are just wasting your time. There are good [resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) for seeing where optimization is lacking. Target those in the meantime, until they are fixed if they can be.
 
-**Bad:**
+现代化浏览器运行时在幕后做大量的优化， 在大多数的时间， 做优化就是在浪费你的时间。 [这些是好的
+资源](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)， 用来
+查看那些地方需要优化。 为这些而优化， 直到他们被修正。
+
+**不好的：**
 
 ```ts
 // On old browsers, each iteration with uncached `list.length` would be costly
 // because of `list.length` recomputation. In modern browsers, this is optimized.
+// 在旧的浏览器上， 每次循环 `list.length` 都没有被缓存， 会导致不必要的开销， 因为要重新计
+// 算 `list.length` 。 在现代化浏览器上， 这个已经被优化了。
 for (let i = 0, len = list.length; i < len; i++) {
   // ...
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 for (let i = 0; i < list.length; i++) {
@@ -1015,14 +1150,17 @@ for (let i = 0; i < list.length; i++) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
-### Remove dead code
+### 移除僵尸代码
 
 Dead code is just as bad as duplicate code. There's no reason to keep it in your codebase.
 If it's not being called, get rid of it! It will still be safe in your version history if you still need it.
 
-**Bad:**
+僵死代码和冗余代码同样糟糕。 没有理由在代码库中保存它。 如果它不会被调用， 就删掉它。 当你需要
+它时， 它依然保存在版本历史记录中。
+
+**不好的：**
 
 ```ts
 function oldRequestModule(url: string) {
@@ -1037,7 +1175,7 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function requestModule(url: string) {
@@ -1048,9 +1186,11 @@ const req = requestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use iterators and generators
+
+### 使用枚举器和生成器
 
 Use generators and iterables when working with collections of data used like a stream.  
 There are some good reasons:
@@ -1061,7 +1201,13 @@ items to access
 - built-in support for iterating items using the `for-of` syntax
 - iterables allow to implement optimized iterator patterns
 
-**Bad:**
+当像流一样处理数据集时， 使用生成器和枚举器。 这样做的好处是：
+
+- 被调用者与生成器解耦， 这样被调用者可以决定处理多少项；
+- 延迟执行， 元素按流式按需处理；
+- 允许为枚举模式实现进行优化；
+
+**不好的：**
 
 ```ts
 function fibonacci(n: number): number[] {
@@ -1089,6 +1235,7 @@ print(10);
 ```ts
 // Generates an infinite stream of Fibonacci numbers.
 // The generator doesn't keep the array of all numbers.
+// 生成一个无限长的斐波那契数字流， 生成器并没有保存数字数组。
 function* fibonacci(): IterableIterator<number> {
   let [a, b] = [0, 1];
 
@@ -1114,6 +1261,8 @@ There are libraries that allow working with iterables in a similar way as with n
 chaining methods like `map`, `slice`, `forEach` etc. See [itiriri](https://www.npmjs.com/package/itiriri) for
 an example of advanced manipulation with iterables (or [itiriri-async](https://www.npmjs.com/package/itiriri-async) for manipulation of async iterables).
 
+一些类库可以与原生数组类似的方式使用枚举， 将 `map`， `slice`， `forEach` 等方法串联到一起。 请参考 [itiriri](https://www.npmjs.com/package/itiriri) 的高级枚举处理示例（或者 [itiriri-async](https://www.npmjs.com/package/itiriri-async) 的异步枚举处理）。
+
 ```ts
 import itiriri from 'itiriri';
 
@@ -1131,7 +1280,7 @@ itiriri(fibonacci())
   .forEach(fib => console.log(fib));
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Objects and Data Structures
 
