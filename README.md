@@ -1,4 +1,4 @@
-# clean-code-typescript [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Clean%20Code%20Typescript&url=https://github.com/labs42io/clean-code-typescript)
+# 代码整洁的 TypeScript [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Clean%20Code%20Typescript&url=https://github.com/labs42io/clean-code-typescript)
 
 Clean Code concepts adapted for TypeScript.  
 Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript).
@@ -2297,13 +2297,26 @@ await report = await reader.read('report.json');
 
 ## Testing
 
+## 测试
+
 Testing is more important than shipping. If you have no tests or an inadequate amount, then every time you ship code you won't be sure that you didn't break anything.
 Deciding on what constitutes an adequate amount is up to your team, but having 100% coverage (all statements and branches)
 is how you achieve very high confidence and developer peace of mind. This means that in addition to having a great testing framework, you also need to use a good [coverage tool](https://github.com/gotwarlost/istanbul).
 
 There's no excuse to not write tests. There are [plenty of good JS test frameworks](http://jstherightway.org/#testing-tools) with typings support for TypeScript, so find one that your team prefers. When you find one that works for your team, then aim to always write tests for every new feature/module you introduce. If your preferred method is Test Driven Development (TDD), that is great, but the main point is to just make sure you are reaching your coverage goals before launching any feature, or refactoring an existing one.  
 
+测试比发布更加重要。 如果你没有测试或者测试不够充分， 每次发布时你就不能确认没有破坏任何事情。
+测试的量由你的团队决定， 但是拥有 100% 的覆盖率(包括所有的语句和分支)是你为什么能达到高度自信
+和内心的平静。 这意味着需要一个额外的伟大的测试框架， 也需要一个好的[覆盖率工具](http://gotwarlost.github.io/istanbul/)。
+
+没有理由不写测试。 这里有[大量的优秀的 JS 测试框架](http://jstherightway.org/#testing-tools)，
+选一个适合你的团队的即可。 当为团队选择了测试框架之后， 接下来的目标是为生产的每一个新的功能／模
+块编写测试。 如果你倾向于测试驱动开发(TDD)， 那就太棒了， 但是要点是确认你在上线任何功能或者重
+构一个现有功能之前， 达到了需要的目标覆盖率。
+
 ### The three laws of TDD
+
+### TDD 的三大纪律
 
 1. You are not allowed to write any production code unless it is to make a failing unit test pass.
 
@@ -2311,9 +2324,15 @@ There's no excuse to not write tests. There are [plenty of good JS test framewor
 
 3. You are not allowed to write any more production code than is sufficient to pass the one failing unit test.
 
-**[⬆ back to top](#table-of-contents)**
+1. 不得写任何生产代码， 除非是修复了一个失败的单元测试；
+2. 出现任何失败， 不得继续编写任何单元测试； 编译失败也是失败；
+3. 只要有失败的单元测试， 不得继续编写任何生产代码；
+
+**[⬆ 返回目录](#目录)**
 
 ### F.I.R.S.T. rules
+
+### F.I.R.S.T. 规则
 
 Clean tests should follow the rules:
 
@@ -2327,13 +2346,29 @@ Clean tests should follow the rules:
 
 - **Timely** unit tests should be written before the production code. If you write tests after the production code, you might find writing tests too hard.
 
-**[⬆ back to top](#table-of-contents)**
+简洁测试应当遵循的规则：
+
+- **快速 (Fast)** 测试应当很快， 因为我们希望经常运行他们。
+
+- **独立 (Independent)** 测试不应当相互依赖。 不管是单独运行还是一起以任意顺序运行， 应当有相同的输出。
+
+- **重复 (Repeatable)** 测试应当是在任何环境下可重复的， 测试失败不应有任何理由。
+
+- **自验证 (Self-Validating)** 一个测试的结果应该是 *通过* 或者 *失败* 。 不需要去比较日志文件来判断测试是否通过。
+
+- **及时 (Timely)** 单元测试应该在产品代码之前编写。 如果你在产品代码之后编写测试， 就会发现写测试太难了。
+
+**[⬆ 返回目录](#目录)**
 
 ### Single concept per test
 
+### 每个测试单个概念
+
 Tests should also follow the *Single Responsibility Principle*. Make only one assert per unit test.
 
-**Bad:**
+单元测试也应当遵守 *单一职责原则* 。 让每个单元测试只包含一个断言。
+
+**不好的：**
 
 ```ts
 import { assert } from 'chai';
@@ -2354,7 +2389,7 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { assert } from 'chai';
@@ -2377,13 +2412,17 @@ describe('AwesomeDate', () => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### The name of the test should reveal it's intention
 
+### 测试的名称应当揭示它的动机
+
 When a test fail, it's name is the first indication of what may have gone wrong.
 
-**Bad:**
+当测试失败时， 它的名称就是错误的第一指示。
+
+**不好的：**
 
 ```ts
 describe('Calendar', () => {
@@ -2397,7 +2436,7 @@ describe('Calendar', () => {
 });
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 describe('Calendar', () => {
@@ -2411,7 +2450,7 @@ describe('Calendar', () => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Concurrency
 
