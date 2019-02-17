@@ -32,7 +32,7 @@ Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-cod
   8. [并发](#并发)
   9. [错误处理](#错误处理)
   10. [格式化](#格式化)
-  11. [评论](#评论)
+  11. [注释](#注释)
   12. [翻译](#翻译)
 
 ## Introduction
@@ -2765,7 +2765,11 @@ try {
 
 ## Formatting
 
+## 格式化
+
 Formatting is subjective. Like many rules herein, there is no hard and fast rule that you must follow. The main point is *DO NOT ARGUE* over formatting. There are tons of tools to automate this. Use one! It's a waste of time and money for engineers to argue over formatting. The general rule to follow is *keep consistent formatting rules*.  
+
+格式化是主观的。 就像其它规则一样， 没有必须让你遵守的硬性规则。 重点是不要因为格式去争论， 有大量的工具来自动格式化， 使用其中的一个即可！ 因为做为工程师去争论格式化就是在浪费时间和金钱。 要遵守的通用规则是 *保持一致的格式化规则* 。
 
 For TypeScript there is a powerful tool called [TSLint](https://palantir.github.io/tslint/). It's a static analysis tool that can help you improve dramatically the readability and maintainability of your code. There are ready to use TSLint configurations that you can reference in your projects:
 
@@ -2785,11 +2789,31 @@ For TypeScript there is a powerful tool called [TSLint](https://palantir.github.
 
 Refer also to this great [TypeScript StyleGuide and Coding Conventions](https://basarat.gitbooks.io/typescript/docs/styleguide/styleguide.html) source.
 
-### Use consistent capitalization
+对 TypeScript 来说， 有一个强大的工具叫做 [TSLint](https://palantir.github.io/tslint/) 。 它是一个可以显著提高代码的可读性和可维护性的静态分析工具。 也已经有一些可用的 TSLint 配置供你在项目中参考：
+
+- [标准的 TSLint 配置](https://www.npmjs.com/package/tslint-config-standard) - 标准风格规则
+
+- [Airbnb 的 TSLint 配置](https://www.npmjs.com/package/tslint-config-airbnb) - Airbnb 风格指南
+
+- [简洁代码的 TSLint 配置](https://www.npmjs.com/package/tslint-clean-code) - 受 [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.ca/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) 影响的 TSLint 规则
+
+- [React 的 TSLint 配置](https://www.npmjs.com/package/tslint-react) - React & JSX 相关的 TSLint 配置
+
+- [TSLint + Prettier](https://www.npmjs.com/package/tslint-config-prettier) - [Prettier](https://github.com/prettier/prettier) 的代码检查规则
+
+- [TypeScript 的 ESLint 规则](https://www.npmjs.com/package/tslint-eslint-rules) - TypeScript 的 ESLint 规则
+
+- [Immutable](https://www.npmjs.com/package/tslint-immutable) - TypeScript 中禁止突变的规则
+
+也请参考这个伟大的 [TypeScript 风格指南和编码约定](https://basarat.gitbooks.io/typescript/docs/styleguide/styleguide.html) 。
+
+### 使用一致的大小写
 
 Capitalization tells you a lot about your variables, functions, etc. These rules are subjective, so your team can choose whatever they want. The point is, no matter what you all choose, just *be consistent*.
 
-**Bad:**
+大小写可以告诉你很多关于你的变量， 函数等等。 这些规则是主观的， 所以你的团队可以选择他们想要的任何东西。 关键是， 无论你选择什么， 只要 *保持一致* 即可。
+
+**不好的：**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2805,7 +2829,7 @@ type animal = { /* ... */ }
 type Container = { /* ... */ }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const DAYS_IN_WEEK = 7;
@@ -2824,14 +2848,21 @@ type Container = { /* ... */ }
 Prefer using `PascalCase` for class, interface, type and namespace names.  
 Prefer using `camelCase` for variables, functions and class members.
 
-**[⬆ back to top](#table-of-contents)**
+建议类、 接口、 类型和命名空间使用 `PascalCase` 风格， 变量、 函数和类成员使用 `camelCase` 风格。
+
+**[⬆ 返回目录](#目录)**
 
 ### Function callers and callees should be close
+
+### 函数的调用方与被调用方应该靠近
 
 If a function calls another, keep those functions vertically close in the source file. Ideally, keep the caller right above the callee.
 We tend to read code from top-to-bottom, like a newspaper. Because of this, make your code read that way.
 
-**Bad:**
+如果一个函数调用另一个， 则在代码中这两个函数的竖直位置应该靠近。 理想情况下，保持被调用函数在被调用函数的正上方。 我们倾向于从上到下阅读代码， 就像读一章报纸。 由于这个原因， 保持你的代码可
+以按照这种方式阅读。
+
+**不好的：**
 
 ```ts
 class PerformanceReview {
@@ -2872,7 +2903,7 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class PerformanceReview {
@@ -2913,9 +2944,11 @@ const review = new PerformanceReview(employee);
 review.review();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Organize imports
+
+### 组织导入
 
 With clean and easy to read import statements you can quickly see the dependencies of current code. Make sure you apply following good practices for `import` statements:
 
@@ -2932,7 +2965,22 @@ With clean and easy to read import statements you can quickly see the dependenci
   - modules from a parent directory (i.e. `import foo from '../foo'; import qux from '../../foo/qux';`)
   - modules from the same or a sibling's directory (i.e. `import bar from './bar'; import baz from './bar/baz';`)
 
-**Bad:**
+使用简洁易读的 import 语句， 您可以快速查看当前代码的依赖关系。 确保对 `import` 语句应用以下良好实践：
+
+- 导入应当排序并分组；
+- 未使用的导入应当删除；
+- 命名导入应当排序 (比如： `import {A, B, C} from 'foo';`)
+- 导入源应当在分组内排序， 比如： `import * as foo from 'a'; import * as bar from 'b';`
+- 分组导入之间保留一个空行；
+- 分组之间应当遵守下面的顺序：
+  - 兼容性填充 (比如： `import 'reflect-metadata';`)
+  - Node 内置模块 (比如： `import fs from 'fs';`)
+  - 外部模块 (比如： `import { query } from 'itiriri';`)
+  - 内部模块 (i.e `import { UserService } from 'src/services/userService';`)
+  - 来自父目录的模块 (比如： `import foo from '../foo'; import qux from '../../foo/qux';`)
+  - 来自相同目录或同级目录的模块 (比如： `import bar from './bar'; import baz from './bar/baz';`)
+
+**不好的：**
 
 ```ts
 import { TypeDefinition } from '../types/typeDefinition';
@@ -2944,7 +2992,7 @@ import { BindingScopeEnum, Container } from 'inversify';
 import 'reflect-metadata';
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import 'reflect-metadata';
@@ -2959,21 +3007,27 @@ import { ApiCredentials, Adapters } from './common/api/authorization';
 import { ConfigPlugin } from './plugins/config/configPlugin';
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Use typescript aliases
+
+### 使用 TypeScript 别名
 
 Create prettier imports by defining the paths and baseUrl properties in the compilerOptions section in the `tsconfig.json`
 
 This will avoid long relative paths when doing imports.
 
-**Bad:**
+通过在 `tsconfig.json` 文件中的 compilerOptions 对象内定义路径和基础路径， 可以创建更漂亮的导入。
+
+这将避免导入时出现太长的相对路径。
+
+**不好的：**
 
 ```ts
 import { UserService } from '../../../services/UserService';
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { UserService } from '@services/UserService';
@@ -2993,40 +3047,55 @@ import { UserService } from '@services/UserService';
 ...
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Comments
+
+## 注释
 
 The use of a comments is an indication of failure to express without them. Code should be the only source of truth.
   
 > Don’t comment bad code—rewrite it.  
 > — *Brian W. Kernighan and P. J. Plaugher*
 
+使用注释就意味着代码的表达失败。 代码应该是唯一的事实来源。
+
+> 不是为烂代码添加注释， 而是重写它们。  
+> - *Brian W. Kernighan 和 P. J. Plaugher*
+
 ### Prefer self explanatory code instead of comments
+
+### 倾向于自描述的代码而不是注释
 
 Comments are an apology, not a requirement. Good code *mostly* documents itself.
 
-**Bad:**
+评论是代码的辩解， 不是要求。 多数情况下， 好的代码就是文档。
+
+**不好的：**
 
 ```ts
 // Check if subscription is active.
 if (subscription.endDate > Date.now) {  }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 const isSubscriptionActive = subscription.endDate > Date.now;
 if (isSubscriptionActive) { /* ... */ }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't leave commented out code in your codebase
 
+### 不要在代码库中保存注释掉的代码
+
 Version control exists for a reason. Leave old code in your history.
 
-**Bad:**
+因为有版本控制， 把旧的代码留在历史记录即可
+
+**不好的：**
 
 ```ts
 type User = {
@@ -3037,7 +3106,7 @@ type User = {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 type User = {
@@ -3046,13 +3115,18 @@ type User = {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't have journal comments
 
+### 不要有日志式的注释
+
 Remember, use version control! There's no need for dead code, commented code, and especially journal comments. Use `git log` to get history!
 
-**Bad:**
+记住， 使用版本控制！ 不需要僵尸代码， 注释掉的代码， 尤其是日志式的评论。 使用 `git log` 来
+获取历史记录。
+
+**不好的：**
 
 ```ts
 /**
@@ -3066,7 +3140,7 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function combine(a: number, b: number): number {
@@ -3074,14 +3148,19 @@ function combine(a: number, b: number): number {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Avoid positional markers
+
+### 避免占位符
 
 They usually just add noise. Let the functions and variable names along with the proper indentation and formatting give the visual structure to your code.  
 Most IDE support code folding feature that allows you to collapse/expand blocks of code (see Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions)).
 
-**Bad:**
+它们仅仅添加了干扰。 让函数和变量名称与合适的缩进和格式化为你的代码提供视觉结构。  
+绝大多数 IDE 支持代码折叠， 允许你展开/关闭代码段 （查看 Visual Studio Code [folding regions](https://code.visualstudio.com/updates/v1_17#_folding-regions) ） 。
+
+**不好的：**
 
 ```ts
 ////////////////////////////////////////////////////////////////////////////////
@@ -3113,7 +3192,7 @@ class Client {
 };
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 class Client {
@@ -3136,9 +3215,11 @@ class Client {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### TODO comments
+
+### TODO 注释
 
 When you find yourself that you need to leave notes in the code for some later improvements,
 do that using `// TODO` comments. Most IDE have special support for those kind of comments so that
@@ -3146,7 +3227,11 @@ you can quickly go over the entire list of todos.
 
 Keep in mind however that a *TODO* comment is not an excuse for bad code. 
 
-**Bad:**
+当你发现你需要在代码中做一些后期改进是， 请使用 `// TODO` 注释。 大多数 IDE 对这种类型的注释有着特殊的支持， 你可以快速的发现全部的 TODO 列表。
+
+记住， *TODO* 注视并不是烂代码的借口。
+
+**不好的：**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
@@ -3155,7 +3240,7 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function getActiveSubscriptions(): Promise<Subscription[]> {
@@ -3164,12 +3249,18 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Translations
 
+## 翻译
+
 This is also available in other languages:
 - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
+
+本文也有其它语言版本：
+
+- ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **巴西葡萄牙语**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
 
 There is work in progress for translating this to other languages:
 
@@ -3177,6 +3268,14 @@ There is work in progress for translating this to other languages:
 - ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) Japanese
 - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) Korean
 
+还有一些语言的版本也正在翻译中：
+
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) 中文
+- ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) 日语
+- ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) 韩语
+
 References will be added once translations are completed.  
 Check this [discussion](https://github.com/labs42io/clean-code-typescript/issues/15) for more details and progress.
 You can make an indispensable contribution to *Clean Code* community by translating this to your language.
+
+一旦翻译完成， 就会在这里添加链接。 关注这个[讨论](https://github.com/labs42io/clean-code-typescript/issues/15)以获得更多的详情以及进度。 您可以通过将其翻译成您的语言，为* Clean Code *社区做出不可或缺的贡献。
