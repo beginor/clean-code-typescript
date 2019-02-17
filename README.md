@@ -698,7 +698,7 @@ createMenu({ body: 'Bar' });
 
 Alternatively, you can use destructuring with default values:
 
-另外， 也可以使用结构来处理默认值：
+另外， 也可以使用解构来处理默认值：
 
 ```ts
 type MenuConfig = { title?: string, body?: string, buttonText?: string, cancellable?: boolean };
