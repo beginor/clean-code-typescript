@@ -829,11 +829,11 @@ A great solution would be for the `addItemToCart` to always clone the `cart`, ed
 
 Two caveats to mention to this approach:
 
-这种方案下需要注意一下 2 个问题：
-
 1. There might be cases where you actually want to modify the input object, but when you adopt this programming practice you will find that those cases are pretty rare. Most things can be refactored to have no side effects! (see [pure function](https://en.wikipedia.org/wiki/Pure_function))
 
 2. Cloning big objects can be very expensive in terms of performance. Luckily, this isn't a big issue in practice because there are great libraries that allow this kind of programming approach to be fast and not as memory intensive as it would be for you to manually clone objects and arrays.
+
+这种方案下需要注意一下 2 个问题：
 
 1. 可能在有些情况下确实需要修改输入对象， 但是当你采用这种编程实践之后， 你会发现这种情况是寥寥无几的。 很多东西可以被重构来消除负面影响。 （参考[纯函数](https://zh.wikipedia.org/wiki/%E7%BA%AF%E5%87%BD%E6%95%B0)/[Pure function](https://en.wikipedia.org/wiki/Pure_function)）
 
