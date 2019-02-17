@@ -37,6 +37,8 @@ Inspired from [clean-code-javascript](https://github.com/ryanmcdermott/clean-cod
 
 ## Introduction
 
+## 简介
+
 ![Humorous image of software quality estimation as a count of how many expletives
 you shout when reading code](https://www.osnews.com/images/comics/wtfm.jpg)
 
@@ -63,8 +65,6 @@ shaped into its final form. Finally, we chisel away the imperfections when
 we review it with our peers. Don't beat yourself up for first drafts that need
 improvement. Beat up the code instead!
 
-## 简介
-
 ![一张用你阅读代码时吐槽的数量来评估软件质量的搞笑图片](https://www.osnews.com/images/comics/wtfm.jpg)
 
 将源自 Robert C. Martin 的 [*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
@@ -85,7 +85,9 @@ improvement. Beat up the code instead!
 
 **[⬆ 返回目录](#目录)**
 
-## Variables 变量
+## Variables
+
+## 变量
 
 ### Use meaningful variable names
 
@@ -311,7 +313,9 @@ function loadPages(count: number = 10) {
 
 **[⬆ 返回目录](#目录)**
 
-## Functions 函数
+## Functions
+
+## 函数
 
 ### Function arguments (2 or fewer ideally)
 
@@ -1230,7 +1234,7 @@ function print(n: number) {
 print(10);
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 // Generates an infinite stream of Fibonacci numbers.
@@ -2454,13 +2458,19 @@ describe('Calendar', () => {
 
 ## Concurrency
 
+## 并发
+
 ### Prefer promises vs callbacks
+
+### 倾向于 Promise 而不是回调
 
 Callbacks aren't clean, and they cause excessive amounts of nesting *(the callback hell)*.  
 There are utilities that transform existing functions using the callback style to a version that returns promises
 (for Node.js see [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original), for general purpose see [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify))
 
-**Bad:**
+回调不够简洁， 因为他们会产生过多的嵌套 *（回调地狱）* 。 这些工具可以将使用回调函数转换成返回 Promise 的函数 （对于 Node.js ， 参考 [`util.promisify`](https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original) ， 而对于更加通用的场景， 参考  [pify](https://www.npmjs.com/package/pify), [es6-promisify](https://www.npmjs.com/package/es6-promisify) ）。
+
+**不好的：**
 
 ```ts
 import { get } from 'request';
@@ -2491,7 +2501,7 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 });
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { get } from 'request';
@@ -2512,6 +2522,8 @@ downloadPage('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', 'article.html'
 
 Promises supports a few helper methods that help make code more conscise:  
 
+Promise 提供了一些帮助方法来让代码变得更加简洁：
+
 | Pattern                  | Description                                |  
 | ------------------------ | -----------------------------------------  |  
 | `Promise.resolve(value)` | Convert a value into a resolved promise.   |  
@@ -2519,15 +2531,28 @@ Promises supports a few helper methods that help make code more conscise:
 | `Promise.all(promises)`  |Returns a new promise which is fulfilled with an array of fulfillment values for the passed promises or rejects with the reason of the first promise that rejects. |
 | `Promise.race(promises)`|Returns a new promise which is fulfilled/rejected with the result/error of the first settled promise from the array of passed promises. |
 
+| Pattern                  | Description                                |  
+| ------------------------ | -----------------------------------------  |  
+| `Promise.resolve(value)` | 将一个值转换为一个已解决的 Promise 。   |  
+| `Promise.reject(error)`  | 将一个错误转换为一个已拒绝的 Promise 。 |  
+| `Promise.all(promises)`  | 从一组 Promise 返回一个新的 Promise ， 如果这组 Promise 全部解决， 则解决新生成的 Promise ， 否则拒绝新生成的 Promise 。 |
+| `Promise.race(promises)`| 从多个 Promise 生成一个新的 Promise ， 返回值由第一个解决或者拒绝的 Promise 决定。 |
+
 `Promise.all` is especially useful when there is a need to run tasks in parallel. `Promise.race` makes it easier to implement things like timeouts for promises.
 
-**[⬆ back to top](#table-of-contents)**
+`Promise.all` 在需要并行运行任务时非常有用， 而 `Promise.race` 则可以比较容易的实现类似超时的 Promise 。
+
+**[⬆ 返回目录](#目录)**
 
 ### Async/Await are even cleaner than Promises
 
+### Async/Await 比 Promise 更加简洁
+
 With `async`/`await` syntax you can write code that is far cleaner and more understandable that chained promises. Within a function prefixed with `async` keyword you have a way to tell the JavaScript runtime to pause the execution of code on the `await` keyword (when used on a promise).
 
-**Bad:**
+使用`async` /`await`语法，您可以编写更清晰，更易理解的链接承诺的代码。 通过在方法前面标记 `async` 关键字， 可以让 JavaScript 运行时在遇到 `async` 关键字时暂停（当使用 Promise 时才能这样做）。
+
+**不好的：**
 
 ```ts
 import { get } from 'request';
@@ -2569,7 +2594,7 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Error Handling
 
