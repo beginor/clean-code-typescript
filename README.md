@@ -2598,10 +2598,16 @@ try {
 
 ## Error Handling
 
+## 错误处理
+
 Thrown errors are a good thing! They mean the runtime has successfully identified when something in your program has gone wrong and it's letting you know by stopping function
 execution on the current stack, killing the process (in Node), and notifying you in the console with a stack trace.
 
+抛出错误是件好事！ 他们意味着当程序出错时， 成功的通知运行时， 并通过停止执行当前堆栈上的函数， 终止进程（在 Node 中）， 并且在控制台打印错误堆栈信息以通知你。
+
 ### Always use Error for throwing or rejecting
+
+### 始终使用为抛出或拒绝使用错误对象 (Error)
 
 JavaScript as well as TypeScript allow you to `throw` any object. A Promise can also be rejected with any reason object.  
 It is advisable to use the `throw` syntax with an `Error` type. This is because your error might be caught in higher level code with a `catch` syntax.
@@ -2609,7 +2615,9 @@ It would be very confusing to catch a string message there and would make
 [debugging more painful](https://basarat.gitbooks.io/typescript/docs/types/exceptions.html#always-use-error).  
 For the same reason you should reject promises with `Error` types.
 
-**Bad:**
+JavaScript 以及 TypeScript 允许你 `抛出` 任意对象， 一个 Promise 也能够用任意对象进行拒绝。 使用 `抛出 (throw)` 语法和 `错误 (Error)` 类型是非常明智的， 这是因为错误消息可能会被更高级的语句用 `cache` 捕获到。 而捕获一个字符串可能会非常令人疑惑的， 同时也会让[调试更加痛苦](https://basarat.gitbooks.io/typescript/docs/types/exceptions.html#always-use-error)。 同样的理由， 拒绝 Promise 时， 也应该使用 `Error` 类型。
+
+**不好的：**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2621,7 +2629,7 @@ function get(): Promise<Item[]> {
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 function calculateTotal(items: Item[]): number {
@@ -2644,6 +2652,8 @@ is very powerful for debugging.
 There are also another alternatives, not to use the `throw` syntax and instead always return custom error objects. TypeScript makes this even easier.
 Consider following example:
 
+使用 `Error` 类型的好处是它被 `try/catch/finally` 支持， 并且所有的 Error 对象都有一个隐式属性 `stack` ， 在调试时很有用。 还有一个选择， 那就是不使用 `throw` 语法， 始终返回自定义的错误对象。 TypeScript 下更加容易， 参看下面的例子：
+
 ```ts
 type Result<R> = { isError: false, value: R };
 type Failure<E> = { isError: true, error: E };
@@ -2661,13 +2671,19 @@ function calculateTotal(items: Item[]): Failable<number, 'empty'> {
 
 For the detailed explanation of this idea refer to the [original post](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9).
 
-**[⬆ back to top](#table-of-contents)**
+要查看这个主意的更详细说明， 请参考[原帖](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9)。
+
+**[⬆ 返回目录](#目录)**
 
 ### Don't ignore caught errors
 
+### 不要忽略捕获到的错误
+
 Doing nothing with a caught error doesn't give you the ability to ever fix or react to said error. Logging the error to the console (`console.log`) isn't much better as often times it can get lost in a sea of things printed to the console. If you wrap any bit of code in a `try/catch` it means you think an error may occur there and therefore you should have a plan, or create a code path, for when it occurs.
 
-**Bad:**
+捕获到错误后，什么都不做， 既不能让你修复错误， 也不能让你响应错误。 使用 `console.log` 将错误输出到控制台并不是十分高明， 因为经常会有大量的内容被打印输出到控制台， 很难再被找到。 一旦你在 `try/catch` 中包括了任何一点儿代码， 这就意味着你认为这里可能会有错误发生， 你应当针对它有一个计划， 或者一段代码来进行处理。
+
+**不好的：**
 
 ```ts
 try {
@@ -2677,15 +2693,17 @@ try {
 }
 
 // or even worse
+// 更糟糕的是
 
 try {
   functionThatMightThrow();
 } catch (error) {
   // ignore error
+  // 完全忽略错误
 }
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { logger } from './logging'
@@ -2697,13 +2715,17 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ### Don't ignore rejected promises
 
+### 不要忽略被拒绝的 Promise
+
 For the same reason you shouldn't ignore caught errors from `try/catch`.
 
-**Bad:**
+由于同样的原因， 你不应该忽略由 `try/catch` 捕获到的错误。
+
+**不好的：**
 
 ```ts
 getUser()
@@ -2715,7 +2737,7 @@ getUser()
   });
 ```
 
-**Good:**
+**好的：**
 
 ```ts
 import { logger } from './logging'
@@ -2729,6 +2751,7 @@ getUser()
   });
 
 // or using the async/await syntax:
+// 或者使用 async/await 语法：
 
 try {
   const user = await getUser();
@@ -2738,7 +2761,7 @@ try {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ 返回目录](#目录)**
 
 ## Formatting
 
