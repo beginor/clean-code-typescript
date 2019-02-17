@@ -658,7 +658,7 @@ You should be critical about code duplication. Sometimes there is a tradeoff bet
 
 ### Set default objects with Object.assign or destructuring
 
-### 使用 Object.assign 设置默认对象或者结构
+### 使用 Object.assign 设置默认对象或者解构
 
 **不好的：**
 
