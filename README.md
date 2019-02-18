@@ -2420,7 +2420,7 @@ describe('AwesomeDate', () => {
 
 **[⬆ 返回目录](#目录)**
 
-### The name of the test should reveal it's intention
+### The name of the test should reveal its intention
 
 ### 测试的名称应当揭示它的动机
 
@@ -3259,14 +3259,19 @@ function getActiveSubscriptions(): Promise<Subscription[]> {
 
 This is also available in other languages:
 - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**: 
+  - [beginor/clean-code-typescript](https://github.com/beginor/clean-code-typescript)
+  - [pipiliang/clean-code-typescript](https://github.com/pipiliang/clean-code-typescript)
 
 本文也有其它语言版本：
 
 - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **巴西葡萄牙语**: [vitorfreitas/clean-code-typescript](https://github.com/vitorfreitas/clean-code-typescript)
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **简体中文**: 
+  - [beginor/clean-code-typescript](https://github.com/beginor/clean-code-typescript)
+  - [pipiliang/clean-code-typescript](https://github.com/pipiliang/clean-code-typescript)
 
 There is work in progress for translating this to other languages:
 
-- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) Chinese
 - ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) Japanese
 - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) Korean
 
