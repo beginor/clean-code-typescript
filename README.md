@@ -3270,6 +3270,7 @@ This is also available in other languages:
 - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **简体中文**: 
   - [beginor/clean-code-typescript](https://github.com/beginor/clean-code-typescript)
   - [pipiliang/clean-code-typescript](https://github.com/pipiliang/clean-code-typescript)
+- ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **日文**: [MSakamaki/clean-code-typescript](https://github.com/MSakamaki/clean-code-typescript)
 
 There is work in progress for translating this to other languages:
 
@@ -3277,8 +3278,6 @@ There is work in progress for translating this to other languages:
 
 还有一些语言的版本也正在翻译中：
 
-- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) 中文
-- ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) 日语
 - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) 韩语
 
 References will be added once translations are completed.  
